@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import codecs
+
+codecs.register(lambda name: codecs.lookup('utf8') if name == 'utf8mb3' else None)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,8 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'x$0m&foye%)+9mvf(_bf4h3!q7%vrv957m!8ot_e%kida!t_w*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sales.apps.SalesConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -74,18 +76,7 @@ WSGI_APPLICATION = 'sales_database.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'sales_database',
-        'USER': 'root',
-        'PASSWORD': 'P@ssword1',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'OPTIONS': {'autocommit': True
-        }
-    }
-}
+
 
 
 # Password validation
@@ -125,3 +116,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+try:
+    from sales_database.local_settings import *
+except ImportError:
+    pass
