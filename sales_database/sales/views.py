@@ -257,3 +257,129 @@ class ImageDetail(APIView):
         image = self.get_object(name)
         image.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class SizeList(APIView):
+
+    def get(self, request):
+        size = Size.objects.all()
+        serializer = SizeSerializer(size, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = SizeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SizeDetail(APIView):
+
+    def get_object(self, size):
+        try:
+            return Size.objects.filter(size=size)
+        except Size.DoesNotExist:
+            raise Http404
+
+    def get(self, request, size):
+        size = self.get_object(size)
+        serializer = SizeSerializer(size, many=True)
+        return Response(serializer.data)
+
+    def put(self, request, size):
+        size = self.get_object(size)
+        serializer = SizeSerializer(size, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, size):
+        size = self.get_object(size)
+        size.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ColorList(APIView):
+
+    def get(self, request):
+        color = Color.objects.all()
+        serializer = ColorSerializer(color, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ColorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ColorDetail(APIView):
+
+    def get_object(self, color):
+        try:
+            return Color.objects.filter(color=color)
+        except Color.DoesNotExist:
+            raise Http404
+
+    def get(self, request, color):
+        color = self.get_object(color)
+        serializer = ColorSerializer(color, many=True)
+        return Response(serializer.data)
+
+    def put(self, request, color):
+        color = self.get_object(color)
+        serializer = ColorSerializer(color, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, color):
+        color = self.get_object(color)
+        color.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ShoppingCartList(APIView):
+
+    def get(self, request):
+        shoppingCart = ShoppingCart.objects.all()
+        serializer = ShoppingCartSerializer(shoppingCart, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ShoppingCartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ShoppingCartDetail(APIView):
+
+    def get_object(self, user_Id):
+        try:
+            return ShoppingCart.objects.filter(user_Id=user_Id)
+        except ShoppingCart.DoesNotExist:
+            raise Http404
+
+    def get(self, request, user_Id):
+        shoppingCart = self.get_object(user_Id)
+        serializer = ShoppingCartSerializer(shoppingCart, many=True)
+        return Response(serializer.data)
+
+    def put(self, request, user_Id):
+        shoppingCart = self.get_object(user_Id)
+        serializer = ShoppingCartSerializer(shoppingCart, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, user_Id):
+        shoppingCart = self.get_object(user_Id)
+        shoppingCart.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

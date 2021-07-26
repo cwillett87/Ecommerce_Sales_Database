@@ -14,4 +14,10 @@ urlpatterns = [
     path('reviews/<int:product_Id>/', views.ReviewDetail.as_view()),
     path('images/', views.ImageList.as_view()),
     path('images/<str:name>/', views.ImageDetail.as_view()),
+    path('sizes/', views.SizeList.as_view()),
+    path('sizes/<str:size>/',views.SizeDetail.as_view()),
+    path('colors/', views.ColorList.as_view()),
+    path('colors/<str:color>/', views.ColorDetail.as_view()),
+    path('shoppingcarts/', views.ShoppingCartList.as_view()),
+    path('shoppingcarts/<int:user_Id>/', views.ShoppingCartDetail.as_view()),
 ]
