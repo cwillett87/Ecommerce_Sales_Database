@@ -24,27 +24,27 @@ class RoleList(APIView):
 
 class RoleDetail(APIView):
 
-    def get_object(self, role):
+    def get_object(self, pk):
         try:
-            return Role.objects.filter(role=role)
+            return Role.objects.get(pk=pk)
         except Role.DoesNotExist:
             raise Http404
 
-    def get(self, request, role):
-        role = self.get_object(role)
-        serializer = RoleSerializer(role, many=True)
+    def get(self, request, pk):
+        role = self.get_object(pk)
+        serializer = RoleSerializer(role)
         return Response(serializer.data)
 
-    def put(self, request, role):
-        role = self.get_object(role)
+    def put(self, request, pk):
+        role = self.get_object(pk)
         serializer = RoleSerializer(role, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, role):
-        role = self.get_object(role)
+    def delete(self, request, pk):
+        role = self.get_object(pk)
         role.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -52,7 +52,7 @@ class RoleDetail(APIView):
 class UserList(APIView):
 
     def get(self, request):
-        user = Role.objects.all()
+        user = User.objects.all()
         serializer = UserSerializer(user, many=True)
         return Response(serializer.data)
 
@@ -68,7 +68,7 @@ class UserDetail(APIView):
 
     def get_object(self, username):
         try:
-            return User.objects.filter(username=username)
+            return User.objects.get(username=username)
         except User.DoesNotExist:
             raise Http404
 
@@ -110,7 +110,7 @@ class OrderDetail(APIView):
 
     def get_object(self, user_Id):
         try:
-            return Order.objects.filter(user_Id=user_Id)
+            return Order.objects.get(user_Id=user_Id)
         except Order.DoesNotExist:
             raise Http404
 
@@ -137,7 +137,7 @@ class ProductList(APIView):
 
     def get(self, request):
         product = Product.objects.all()
-        serializer = OrderSerializer(product, many=True)
+        serializer = ProductSerializer(product, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -150,27 +150,27 @@ class ProductList(APIView):
 
 class ProductDetail(APIView):
 
-    def get_object(self, id):
+    def get_object(self, pk):
         try:
-            return Product.objects.filter(id=id)
+            return Product.objects.get(pk=pk)
         except Product.DoesNotExist:
             raise Http404
 
-    def get(self, request, id):
-        product = self.get_object(id)
+    def get(self, request, pk):
+        product = self.get_object(pk)
         serializer = ProductSerializer(product, many=True)
         return Response(serializer.data)
 
-    def put(self, request, id):
-        product= self.get_object(id)
+    def put(self, request, pk):
+        product= self.get_object(pk)
         serializer = ProductSerializer(product, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id):
-        product = self.get_object(id)
+    def delete(self, request, pk):
+        product = self.get_object(pk)
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -224,7 +224,7 @@ class ImageList(APIView):
         serializer = ImageSerializer(image, many=True)
         return Response(serializer.data)
 
-    def post(self, request):
+    def post(self, request, format=None):
         serializer = ImageSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -234,27 +234,33 @@ class ImageList(APIView):
 
 class ImageDetail(APIView):
 
-    def get_object(self, name):
+    def get_object(self, product_Id):
         try:
-            return Image.objects.filter(name=name)
+            return Image.objects.filter(product_Id=product_Id)
         except Image.DoesNotExist:
             raise Http404
 
-    def get(self, request, name):
-        image = self.get_object(name)
+    def get(self, request, product_Id, format=None):
+        image = self.get_object(product_Id)
         serializer = ImageSerializer(image, many=True)
         return Response(serializer.data)
 
-    def put(self, request, name):
-        image = self.get_object(name)
-        serializer = ImageSerializer(image, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, name):
-        image = self.get_object(name)
+class ImageDelete(APIView):
+
+    def get_object(self, pk):
+        try:
+            return Image.objects.get(pk=pk)
+        except Image.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        image = self.get_object(pk)
+        serializer = ImageSerializer(image)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        image = self.get_object(pk)
         image.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -276,27 +282,27 @@ class SizeList(APIView):
 
 class SizeDetail(APIView):
 
-    def get_object(self, size):
+    def get_object(self, pk):
         try:
-            return Size.objects.filter(size=size)
+            return Size.objects.get(pk=pk)
         except Size.DoesNotExist:
             raise Http404
 
-    def get(self, request, size):
-        size = self.get_object(size)
-        serializer = SizeSerializer(size, many=True)
+    def get(self, request, pk):
+        size = self.get_object(pk)
+        serializer = SizeSerializer(size)
         return Response(serializer.data)
 
-    def put(self, request, size):
-        size = self.get_object(size)
+    def put(self, request, pk):
+        size = self.get_object(pk)
         serializer = SizeSerializer(size, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, size):
-        size = self.get_object(size)
+    def delete(self, request, pk):
+        size = self.get_object(pk)
         size.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -320,13 +326,13 @@ class ColorDetail(APIView):
 
     def get_object(self, color):
         try:
-            return Color.objects.filter(color=color)
+            return Color.objects.get(color=color)
         except Color.DoesNotExist:
             raise Http404
 
     def get(self, request, color):
         color = self.get_object(color)
-        serializer = ColorSerializer(color, many=True)
+        serializer = ColorSerializer(color)
         return Response(serializer.data)
 
     def put(self, request, color):
@@ -371,15 +377,29 @@ class ShoppingCartDetail(APIView):
         serializer = ShoppingCartSerializer(shoppingCart, many=True)
         return Response(serializer.data)
 
-    def put(self, request, user_Id):
-        shoppingCart = self.get_object(user_Id)
+
+class ShoppingCartUpdate(APIView):
+
+    def get_object(self, pk):
+        try:
+            return ShoppingCart.objects.get(pk=pk)
+        except ShoppingCart.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        shoppingCart = self.get_object(pk)
+        serializer = ShoppingCartSerializer(shoppingCart)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        shoppingCart = self.get_object(pk)
         serializer = ShoppingCartSerializer(shoppingCart, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, user_Id):
-        shoppingCart = self.get_object(user_Id)
+    def delete(self, request, pk):
+        shoppingCart = self.get_object(pk)
         shoppingCart.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Role, User, Product, Order, Review, Image, Size, Color, ShoppingCart
+from djoser.serializers import UserCreateSerializer, UserSerializer
 
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -8,8 +9,8 @@ class RoleSerializer(serializers.ModelSerializer):
         fields = ['id', 'type']
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
+class UserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
         model = User
         fields = ['id', 'role', 'username', 'password', 'email', 'address', 'phone', 'first_name', 'last_name']
 
@@ -35,13 +36,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ['id', 'type']
-
-
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Role
-        fields = ['id', 'product_Id', 'name']
+        fields = ['id', 'product_Id', 'image']
 
 
 class SizeSerializer(serializers.ModelSerializer):
@@ -59,4 +54,4 @@ class ColorSerializer(serializers.ModelSerializer):
 class ShoppingCartSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingCart
-        fields = ['id', 'user_Id', 'product_id', 'color_Id', 'size_Id', 'quantity']
+        fields = ['id', 'user_Id', 'product_Id', 'color_Id', 'size_Id', 'quantity']

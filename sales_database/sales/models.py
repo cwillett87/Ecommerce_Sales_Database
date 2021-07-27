@@ -1,26 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AnonymousUser
 
 
 class Role(models.Model):
-    type = models.CharField(max_length=50)
+    type = models.CharField(primary_key=True, max_length=50)
 
 
-class User(models.Model):
-    role = models.ForeignKey('sales.Role', null=False, on_delete=models.CASCADE)
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
+class User(AbstractUser):
+    role = models.ForeignKey('sales.Role', null=True, on_delete=models.CASCADE)
     email = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
-    phone = models.BigIntegerField(blank=True,null=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    phone = models.BigIntegerField(blank=True, null=True)
+    REQUIRED_FIELDS = ['phone', 'first_name', 'last_name', 'address']
 
 
 class Order(models.Model):
     user_Id = models.ForeignKey('sales.User', null=False, on_delete=models.CASCADE)
     tracking_number = models.CharField(max_length=50)
     total = models.IntegerField()
-    checked_Out = False
+    checked_Out = models.BooleanField(default=False)
 
 
 class Product(models.Model):
@@ -40,7 +39,7 @@ class Review(models.Model):
 
 class Image(models.Model):
     product_Id = models.ForeignKey('sales.Product', blank=True, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    path = models.CharField(max_length=50)
 
 
 class Size(models.Model):
