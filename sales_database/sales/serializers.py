@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Role, User, Product, Order, Review, Image, Size, Color, ShoppingCart
+from .models import *
 from djoser.serializers import UserCreateSerializer, UserSerializer
 
 

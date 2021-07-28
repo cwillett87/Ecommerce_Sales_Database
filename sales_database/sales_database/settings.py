@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,26 +83,7 @@ WSGI_APPLICATION = 'sales_database.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSIONS_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-}
 
-AUTH_USER_MODEL = 'sales.User'
-
-DJOSER = {
-    'USER_CREATE_PASSWORD_RETYPE': True,
-    'SERIALIZERS': {
-        'user_create': 'sales.serializers.UserCreateSerializer',
-        'user': 'sales.serializers.UserCreateSerializer',
-    },
-}
 
 
 

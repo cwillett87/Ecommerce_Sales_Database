@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import AnonymousUser
 
 
 class Role(models.Model):
@@ -9,10 +8,14 @@ class Role(models.Model):
 
 class User(AbstractUser):
     role = models.ForeignKey('sales.Role', null=True, on_delete=models.CASCADE)
-    email = models.CharField(max_length=50)
+    email = models.EmailField(verbose_name='email', max_length=100, unique=True)
     address = models.CharField(max_length=100)
     phone = models.BigIntegerField(blank=True, null=True)
-    REQUIRED_FIELDS = ['phone', 'first_name', 'last_name', 'address']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'address', 'phone']
+    USERNAME_FIELD = 'email'
+
+    def get_username(self):
+        return self.email
 
 
 class Order(models.Model):
