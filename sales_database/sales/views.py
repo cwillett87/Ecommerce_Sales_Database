@@ -158,7 +158,7 @@ class ProductDetail(APIView):
 
     def get(self, request, pk):
         product = self.get_object(pk)
-        serializer = ProductSerializer(product, many=True)
+        serializer = ProductSerializer(product)
         return Response(serializer.data)
 
     def put(self, request, pk):
@@ -224,7 +224,7 @@ class ImageList(APIView):
         serializer = ImageSerializer(image, many=True)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = ImageSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -240,7 +240,7 @@ class ImageDetail(APIView):
         except Image.DoesNotExist:
             raise Http404
 
-    def get(self, request, product_Id, format=None):
+    def get(self, request, product_Id):
         image = self.get_object(product_Id)
         serializer = ImageSerializer(image, many=True)
         return Response(serializer.data)

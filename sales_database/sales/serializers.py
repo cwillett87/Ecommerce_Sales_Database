@@ -24,7 +24,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'creator_Id', 'name', 'description', 'price', 'ave_rating', 'quantity']
+        fields = ['id', 'creator_Id', 'name', 'description', 'price', 'ave_rating', 'quantity', 'main_image']
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -36,7 +36,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ['id', 'product_Id', 'image']
+        fields = ['id', 'product_Id', 'path']
 
 
 class SizeSerializer(serializers.ModelSerializer):
@@ -52,6 +52,7 @@ class ColorSerializer(serializers.ModelSerializer):
 
 
 class ShoppingCartSerializer(serializers.ModelSerializer):
+    product_Id = ProductSerializer(read_only=True)
     class Meta:
         model = ShoppingCart
         fields = ['id', 'user_Id', 'product_Id', 'color_Id', 'size_Id', 'quantity']

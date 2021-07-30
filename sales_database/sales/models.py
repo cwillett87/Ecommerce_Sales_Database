@@ -32,6 +32,7 @@ class Product(models.Model):
     price = models.IntegerField()
     ave_rating = models.IntegerField()
     quantity = models.IntegerField()
+    main_image = models.CharField(max_length=50)
 
 
 class Review(models.Model):
@@ -46,11 +47,11 @@ class Image(models.Model):
 
 
 class Size(models.Model):
-    size = models.CharField(max_length=50)
+    size = models.CharField(primary_key=True, max_length=50)
 
 
 class Color(models.Model):
-    color = models.CharField(max_length=50)
+    color = models.CharField(primary_key=True, max_length=50)
 
 
 class ShoppingCart(models.Model):
