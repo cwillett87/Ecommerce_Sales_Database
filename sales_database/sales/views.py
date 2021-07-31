@@ -1,5 +1,5 @@
 from .models import Role, User, Product, Order, Review, Image, Size, Color, ShoppingCart
-from .serializers import RoleSerializer, OrderSerializer, UserSerializer, ProductSerializer, ReviewSerializer, ImageSerializer, SizeSerializer, ColorSerializer, ShoppingCartSerializer
+from .serializers import RoleSerializer, OrderSerializer, UserSerializer, ProductSerializer, ReviewSerializer, ImageSerializer, SizeSerializer, ColorSerializer, ShoppingCartSerializer, PostShoppingCartSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -357,7 +357,7 @@ class ShoppingCartList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = ShoppingCartSerializer(data=request.data)
+        serializer = PostShoppingCartSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

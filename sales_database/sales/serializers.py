@@ -56,3 +56,9 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingCart
         fields = ['id', 'user_Id', 'product_Id', 'color_Id', 'size_Id', 'quantity']
+
+
+class PostShoppingCartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShoppingCart
+        fields = ['id', 'user_Id', 'product_Id', 'color_Id', 'size_Id', 'quantity']

@@ -14,6 +14,7 @@ from pathlib import Path
 import codecs
 import os
 
+
 codecs.register(lambda name: codecs.lookup('utf8') if name == 'utf8mb3' else None)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
