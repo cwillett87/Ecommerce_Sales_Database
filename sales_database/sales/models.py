@@ -29,8 +29,8 @@ class Product(models.Model):
     creator_Id = models.ForeignKey('sales.User', null=False, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
-    price = models.IntegerField()
-    ave_rating = models.IntegerField()
+    price = models.DecimalField(default=0, max_digits=60, decimal_places=2)
+    ave_rating = models.DecimalField(default=0, max_digits=60, decimal_places=2)
     quantity = models.IntegerField()
     main_image = models.CharField(max_length=50)
 
