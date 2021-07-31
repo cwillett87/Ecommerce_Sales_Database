@@ -15,7 +15,15 @@ class UserCreateSerializer(UserCreateSerializer):
         fields = ['id', 'role', 'username', 'password', 'email', 'address', 'phone', 'first_name', 'last_name']
 
 
+class UserSerializer(UserSerializer):
+    class Meta(UserSerializer.Meta):
+        model = User
+        fields = ['id', 'role', 'username', 'password', 'email', 'address', 'phone', 'first_name', 'last_name']
+
+
 class OrderSerializer(serializers.ModelSerializer):
+    user_Id = UserSerializer(read_only=True)
+
     class Meta:
         model = Order
         fields = ['id', 'user_Id', 'tracking_number', 'total', 'checked_Out']
