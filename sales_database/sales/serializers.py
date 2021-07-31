@@ -50,13 +50,13 @@ class ImageSerializer(serializers.ModelSerializer):
 class SizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Size
-        fields = ['id', 'size']
+        fields = ['size']
 
 
 class ColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Color
-        fields = ['id', 'color']
+        fields = ['color']
 
 
 class ShoppingCartSerializer(serializers.ModelSerializer):
