@@ -29,6 +29,12 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['id', 'user_Id', 'tracking_number', 'total', 'checked_Out']
 
 
+class PostOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['id', 'user_Id', 'tracking_number', 'total', 'checked_Out']
+
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product

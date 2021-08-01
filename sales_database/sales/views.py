@@ -1,5 +1,5 @@
 from .models import Role, User, Product, Order, Review, Image, Size, Color, ShoppingCart
-from .serializers import RoleSerializer, OrderSerializer, UserSerializer, ProductSerializer, ReviewSerializer, ImageSerializer, SizeSerializer, ColorSerializer, ShoppingCartSerializer, PostShoppingCartSerializer
+from .serializers import RoleSerializer, OrderSerializer, UserSerializer, ProductSerializer, ReviewSerializer, ImageSerializer, SizeSerializer, ColorSerializer, ShoppingCartSerializer, PostShoppingCartSerializer, PostOrderSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -99,7 +99,7 @@ class OrderList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = OrderSerializer(data=request.data)
+        serializer = PostOrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
