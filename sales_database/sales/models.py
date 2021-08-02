@@ -18,13 +18,6 @@ class User(AbstractUser):
         return self.email
 
 
-class Order(models.Model):
-    user_Id = models.ForeignKey('sales.User', null=False, on_delete=models.CASCADE)
-    tracking_number = models.CharField(max_length=50)
-    total = models.IntegerField()
-    checked_Out = models.BooleanField(default=False)
-
-
 class Product(models.Model):
     creator_Id = models.ForeignKey('sales.User', null=False, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
@@ -60,3 +53,11 @@ class ShoppingCart(models.Model):
     color_Id = models.ForeignKey('sales.Color', null=False, on_delete=models.CASCADE)
     size_Id = models.ForeignKey('sales.Size', null=False, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+
+
+class Order(models.Model):
+    shopping_carts = models.ManyToManyField(ShoppingCart, null=True)
+    user_Id = models.ForeignKey('sales.User', null=False, on_delete=models.CASCADE)
+    tracking_number = models.CharField(max_length=50)
+    total = models.IntegerField()
+    checked_Out = models.BooleanField(default=False)

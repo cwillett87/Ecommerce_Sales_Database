@@ -21,24 +21,33 @@ class UserSerializer(UserSerializer):
         fields = ['id', 'role', 'username', 'password', 'email', 'address', 'phone', 'first_name', 'last_name']
 
 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'creator_Id', 'name', 'description', 'price', 'ave_rating', 'quantity', 'main_image']
+
+
+class ShoppingCartSerializer(serializers.ModelSerializer):
+    product_Id = ProductSerializer(read_only=True)
+
+    class Meta:
+        model = ShoppingCart
+        fields = ['id', 'user_Id', 'product_Id', 'color_Id', 'size_Id', 'quantity']
+
+
 class OrderSerializer(serializers.ModelSerializer):
     user_Id = UserSerializer(read_only=True)
+    shopping_carts = ShoppingCartSerializer(read_only=True, many=True)
 
     class Meta:
         model = Order
-        fields = ['id', 'user_Id', 'tracking_number', 'total', 'checked_Out']
+        fields = ['id', 'shopping_carts', 'user_Id', 'tracking_number', 'total', 'checked_Out']
 
 
 class PostOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 'user_Id', 'tracking_number', 'total', 'checked_Out']
-
-
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ['id', 'creator_Id', 'name', 'description', 'price', 'ave_rating', 'quantity', 'main_image']
+        fields = ['id', 'shopping_carts', 'user_Id', 'tracking_number', 'total', 'checked_Out']
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -63,13 +72,6 @@ class ColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Color
         fields = ['color']
-
-
-class ShoppingCartSerializer(serializers.ModelSerializer):
-    product_Id = ProductSerializer(read_only=True)
-    class Meta:
-        model = ShoppingCart
-        fields = ['id', 'user_Id', 'product_Id', 'color_Id', 'size_Id', 'quantity']
 
 
 class PostShoppingCartSerializer(serializers.ModelSerializer):
