@@ -27,6 +27,12 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'creator_Id', 'name', 'description', 'price', 'ave_rating', 'quantity', 'main_image']
 
 
+class PostProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'creator_Id', 'name', 'description', 'price', 'ave_rating', 'quantity', 'main_image']
+
+
 class ShoppingCartSerializer(serializers.ModelSerializer):
     product_Id = ProductSerializer(read_only=True)
 

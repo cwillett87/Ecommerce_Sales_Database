@@ -1,10 +1,19 @@
 from .models import Role, User, Product, Order, Review, Image, Size, Color, ShoppingCart
-from .serializers import RoleSerializer, OrderSerializer, UserSerializer, ProductSerializer, ReviewSerializer, ImageSerializer, SizeSerializer, ColorSerializer, ShoppingCartSerializer, PostShoppingCartSerializer, PostOrderSerializer
+from .serializers import RoleSerializer, PostProductSerializer, OrderSerializer, UserSerializer, ProductSerializer, ReviewSerializer, ImageSerializer, SizeSerializer, ColorSerializer, ShoppingCartSerializer, PostShoppingCartSerializer, PostOrderSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+from django.conf import settings
+from django.http.response import JsonResponse
 # Create your views here.
+
+
+class StripeKey(APIView):
+
+    def get(self, request):
+        key = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
+        return JsonResponse(key, safe=False)
 
 
 class RoleList(APIView):
@@ -141,7 +150,7 @@ class ProductList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = ProductSerializer(data=request.data)
+        serializer = PostProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -158,12 +167,12 @@ class ProductDetail(APIView):
 
     def get(self, request, pk):
         product = self.get_object(pk)
-        serializer = ProductSerializer(product)
+        serializer = PostProductSerializer(product)
         return Response(serializer.data)
 
     def put(self, request, pk):
         product= self.get_object(pk)
-        serializer = ProductSerializer(product, data=request.data)
+        serializer = PostProductSerializer(product, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

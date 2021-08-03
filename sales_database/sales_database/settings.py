@@ -20,6 +20,7 @@ codecs.register(lambda name: codecs.lookup('utf8') if name == 'utf8mb3' else Non
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51JJ2yrAIiUqEkZxeEHshJgvN2oyvjs9n24c3msLuwjnQtQRNi0hXKNXoJmczlZFRmgfWFN8uqQCHwjp2B2hNkKbe00uEzODZr2'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/

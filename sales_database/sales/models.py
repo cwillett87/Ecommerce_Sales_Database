@@ -11,7 +11,7 @@ class User(AbstractUser):
     email = models.EmailField(verbose_name='email', max_length=100, unique=True)
     address = models.CharField(max_length=100)
     phone = models.BigIntegerField(blank=True, null=True)
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'address', 'phone']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'role', 'address', 'phone']
     USERNAME_FIELD = 'email'
 
     def get_username(self):

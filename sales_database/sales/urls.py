@@ -24,4 +24,5 @@ urlpatterns = [
     path('shopping-carts-update/<int:pk>/', views.ShoppingCartUpdate.as_view()),
     path('', include('djoser.urls')),
     path('', include('djoser.urls.authtoken')),
+    path('config/', views.StripeKey.as_view()),
 ]
