@@ -59,5 +59,5 @@ class Order(models.Model):
     shopping_carts = models.ManyToManyField(ShoppingCart, null=True)
     user_Id = models.ForeignKey('sales.User', null=False, on_delete=models.CASCADE)
     tracking_number = models.CharField(max_length=50)
-    total = models.IntegerField()
+    total = models.DecimalField(default=0, max_digits=60, decimal_places=2)
     checked_Out = models.BooleanField(default=False)
